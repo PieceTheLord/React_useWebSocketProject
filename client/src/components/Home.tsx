@@ -1,10 +1,19 @@
 import { Cursor } from "./Cursor";
 import useWebSocket from "react-use-websocket";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import throttle from "lodash.throttle";
 
-const renderCursors = (users) => {
-  return Object.keys(users).map((uuid) => {
+type UserType = {
+  username: string,
+  state: {
+    x: number;
+    y: number;
+  }
+  uuid: string;
+}
+
+const renderCursors = (users: UserType[]) => {
+  return Object.keys(users).map((uuid: any) => {
     const user = users[uuid]
     return (
       <Cursor 
@@ -16,21 +25,21 @@ const renderCursors = (users) => {
   })
 }
 
-const renderUsersList = users => {
+const renderUsersList = (users: UserType[]) => {
   return (
     <ul>
-      {Object.keys(users).map(uuid => {
+      {Object.keys(users).map((uuid: any) => {
         return <li key={uuid}>{JSON.stringify(users[uuid])}</li>
       })}
     </ul>
   )
 }
 
-export function Home({ username }) {
+export function Home({ username }: { username: string}) {
   // Url of out back-end
   const WS_URL = `ws://127.0.0.1:8000`;
   // Set the webSocket connection
-  const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL, {
+  const { sendJsonMessage, lastJsonMessage } = useWebSocket<UserType[]>(WS_URL, {
     share: true, 
     queryParams: { username }, 
   });

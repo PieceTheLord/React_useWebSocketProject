@@ -1,7 +1,9 @@
 import { PerfectCursor } from "perfect-cursors"
 import * as React from "react"
 
-export function usePerfectCursor(cb, point) {
+type usePerfectCursorReturnType = (point: number[]) => void
+
+export function usePerfectCursor(cb: (point: number[]) => void, point?: number[]): usePerfectCursorReturnType {
   const [pc] = React.useState(() => new PerfectCursor(cb))
 
   React.useLayoutEffect(() => {
@@ -9,7 +11,7 @@ export function usePerfectCursor(cb, point) {
     return () => pc.dispose()
   }, [pc])
 
-  const onPointChange = React.useCallback((point) => pc.addPoint(point), [pc])
+  const onPointChange = React.useCallback((point: number[]) => pc.addPoint(point), [pc])
 
   return onPointChange
 }

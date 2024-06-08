@@ -1,11 +1,11 @@
 import * as React from "react";
 import { usePerfectCursor } from "../hooks/useCursor";
 
-export function Cursor({ userId, point }) {
-  const rCursor = React.useRef(null);
+export function Cursor({ userId, point } : { userId: string, point: number[]}) {
+  const rCursor = React.useRef<any>(null);
 
   // Gives CSS for animating cursors
-  const animateCursor = React.useCallback((point) => {
+  const animateCursor = React.useCallback((point: number[]) => {
     const elm = rCursor.current;
     if (!elm) return;
     elm.style.setProperty(
@@ -21,6 +21,7 @@ export function Cursor({ userId, point }) {
   // User cursors
   return (
     <svg
+      key={userId}
       ref={rCursor}
       style={{
         position: "absolute",

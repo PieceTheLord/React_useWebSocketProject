@@ -1,19 +1,35 @@
 # Hello! This is educational React project for studying `react-use-websocket` library and websocket in general
 
+
+
 ### This project doesn't require any additional tools like a database or domen.
 ### To start use it, you can just clone it by enter the following command in your terminl:
+
+
 
 ```Terminal
 git clone https://github.com/PieceTheLord/React_useWebSocketProject
 ```
 
+
+
 ## Back-end 
+
 - Now, let's go to the server folder : 
-`cd server`
+```Bash
+cd server
+```
+
 - Install the dependencies by enter the command below :
-`npm i` or `npm install`
+```Bash
+npm i 
+```
+
 - After that, you can successfully start the server :
-`npm start`
+```Bash
+npm start
+```
+
 
 ---
 
@@ -22,11 +38,20 @@ Okay, we have the _*WS*_(WebSocket) server ready for a requests!
 Now we can set the client to use the server.
 
 1. Go to the client folder :
-`cd client`
+```
+cd client
+```
+
 2. Install the dependencies :
-`npm i` or `npm install`
+```Bash
+npm i` or `npm install
+```
+
 3. Let's start the client by following next line in terminal :
-`npm run dev`
+```
+npm run dev
+```
+
 
 ---
 

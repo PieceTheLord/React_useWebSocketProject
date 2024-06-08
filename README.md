@@ -3,9 +3,9 @@
 ### This project doesn't require any additional tools like a database or domen.
 ### To start use it, you can just clone it by enter the following command in your terminl:
 
-'''
+```Terminal
 git clone https://github.com/PieceTheLord/React_useWebSocketProject
-'''
+```
 
 ## Back-end 
 - Now, let's go to the server folder : 

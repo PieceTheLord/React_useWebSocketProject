@@ -1,43 +1,70 @@
+import { Cursor } from "./Cursor";
 import useWebSocket from "react-use-websocket";
 import React, { useEffect, useRef } from "react";
-import throttle from "lodash.throttle"
+import throttle from "lodash.throttle";
 
-interface HomeProps {
-  username: string;
+const renderCursors = (users) => {
+  return Object.keys(users).map((uuid) => {
+    const user = users[uuid]
+    return (
+      <Cursor 
+        key={uuid} 
+        userId={uuid}
+        point={[user.state.x, user.state.y]}  
+      />
+    )
+  })
 }
 
-export const Home = ({ username }: HomeProps) => {
-  // Url to the web socket connection on our back-end
-  const WS_URL = "ws://127.0.0.1:8000"; 
+const renderUsersList = users => {
+  return (
+    <ul>
+      {Object.keys(users).map(uuid => {
+        return <li key={uuid}>{JSON.stringify(users[uuid])}</li>
+      })}
+    </ul>
+  )
+}
 
-  // * Function for connection to the back-end nad and login
-  const { sendJsonMessage } = useWebSocket(WS_URL, {
-    queryParams: { username },
-    share: true, // Allow us to use useWebSocket wherever in out app
+export function Home({ username }) {
+  // Url of out back-end
+  const WS_URL = `ws://127.0.0.1:8000`;
+  // Set the webSocket connection
+  const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL, {
+    share: true, 
+    queryParams: { username }, 
   });
 
-  // ms for sending cursor cors 
-  const THROTTLE = 50 
-  
-  // * Function with throttling for optimization performance of our app
-  const sendJsonMessageThrottle = useRef(throttle(sendJsonMessage, THROTTLE))
+  // Throttle of requests
+  const THROTTLE = 50;
+  // Throttling function
+  const sendJsonMessageThrottled = useRef(throttle(sendJsonMessage, THROTTLE));
 
-  // Start the next function as this page is rendered
+  // Connect to the back-end by mounting this page
   useEffect(() => {
+    // Send intially corrs of cursor
     sendJsonMessage({
       x: 0,
       y: 0,
     });
-
-    // * add event listener for tracking cursor position 
-    // * and send it to the back-end 
-    window.addEventListener('mousemove', (e: MouseEvent) => {
-      sendJsonMessageThrottle.current({
+    // Add event listener for tracking cursor position
+    window.addEventListener("mousemove", (e) => {
+      sendJsonMessageThrottled.current({
         x: e.clientX,
         y: e.clientY,
-      })
-    })
+      });
+    });
   }, []);
 
-  return <div></div>;
+  if (lastJsonMessage) {
+    return (
+      <>
+        <div>
+          <h1>Online users:</h1>
+          {renderUsersList(lastJsonMessage)}
+        </div>
+        {renderCursors(lastJsonMessage)}
+      </>
+    );
+  }
 };

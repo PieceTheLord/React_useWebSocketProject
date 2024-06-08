@@ -7,7 +7,7 @@
 
 
 
-```Terminal
+```Bash
 git clone https://github.com/PieceTheLord/React_useWebSocketProject
 ```
 
@@ -38,7 +38,7 @@ Okay, we have the _*WS*_(WebSocket) server ready for a requests!
 Now we can set the client to use the server.
 
 1. Go to the client folder :
-```
+```Bash
 cd client
 ```
 
@@ -48,7 +48,7 @@ npm i` or `npm install
 ```
 
 3. Let's start the client by following next line in terminal :
-```
+```Bash
 npm run dev
 ```
 

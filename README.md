@@ -44,7 +44,7 @@ cd client
 
 2. Install the dependencies :
 ```Bash
-npm i` or `npm install
+npm i
 ```
 
 3. Let's start the client by following next line in terminal :

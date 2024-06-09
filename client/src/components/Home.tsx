@@ -40,13 +40,13 @@ export function Home({ username }: { username: string}) {
   const WS_URL = `ws://127.0.0.1:8000`;
   // Set the webSocket connection
   const { sendJsonMessage, lastJsonMessage } = useWebSocket<UserType[]>(WS_URL, {
-    share: true, 
-    queryParams: { username }, 
+    share: true, // Allow use webSocket weherver in this app
+    queryParams: { username }, // Give `username` as parameter in the url
   });
 
-  // Throttle of requests
+  // Throttling of requests
   const THROTTLE = 50;
-  // Throttling function
+  // Function with throttling
   const sendJsonMessageThrottled = useRef(throttle(sendJsonMessage, THROTTLE));
 
   // Connect to the back-end by mounting this page
